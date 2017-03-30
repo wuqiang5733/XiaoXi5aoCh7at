@@ -5,9 +5,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wilddog.client.DataSnapshot;
@@ -25,6 +29,9 @@ public class ChatFragment extends Fragment {
 
     private SyncReference mWilddogRef;
     private ValueEventListener mConnectedListener;
+    private ChatMessageAdapter chatMessageAdapter;
+    private EditText messageInputText;
+
 
     public static ChatFragment newInstance() {
         return new ChatFragment();
@@ -45,7 +52,7 @@ public class ChatFragment extends Fragment {
         mChatRecyclerView = (RecyclerView) view.findViewById(R.id.chat_recycler_view);
         mChatRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        final ChatMessageAdapter chatMessageAdapter = new ChatMessageAdapter(getActivity(), mWilddogRef.limitToLast(50));
+        chatMessageAdapter = new ChatMessageAdapter(getActivity(), mWilddogRef.limitToLast(50));
         mChatRecyclerView.setAdapter(chatMessageAdapter);
 
         chatMessageAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
@@ -73,6 +80,51 @@ public class ChatFragment extends Fragment {
                 // No-op
             }
         });
+        // 输入信息发送
+        messageInputText = (EditText) view.findViewById(R.id.messageInput);
+
+        messageInputText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_NULL && keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
+                    sendMessage();
+                }
+                return true;
+            }
+        });
+
+        view.findViewById(R.id.sendButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendMessage();
+            }
+        });
         return view;
     }
+
+    private void sendMessage() {
+
+        String input = messageInputText.getText().toString();
+        if (!input.equals("")) {
+            // Create our 'model', a Chat object
+            ChatMessage chat = new ChatMessage(input, "WQ");
+            // Create a new, auto-generated child of that chat location, and save our chat data there
+            mWilddogRef.push().setValue(chat);
+            messageInputText.setText("");
+        }
+    }
+
+
+
+        @Override
+    public void onStop() {
+        super.onStop();
+        mWilddogRef.getRoot().child(".info/connected").removeEventListener(mConnectedListener);
+//        chatMessageAdapter.cleanup();
+    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        mWilddogRef.getRoot().child(".info/connected").addChildEventListener();
+//    }
 }

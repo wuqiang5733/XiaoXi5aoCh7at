@@ -139,4 +139,11 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageViewHold
     public int getItemCount() {
         return mModels.size();
     }
+
+    public void cleanup() {
+        // We're being destroyed, let go of our mListener and forget about all of the mModels
+        mRef.removeEventListener(mListener);
+        mModels.clear();
+        mKeys.clear();
+    }
 }
