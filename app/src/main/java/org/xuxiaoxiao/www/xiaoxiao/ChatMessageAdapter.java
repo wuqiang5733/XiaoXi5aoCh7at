@@ -29,7 +29,7 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageViewHold
 
     private Activity activity;
 
-    public ChatMessageAdapter(Activity activity,Query mRef){
+    public ChatMessageAdapter(Activity activity, Query mRef) {
         this.activity = activity;
         /////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////
@@ -59,7 +59,7 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageViewHold
                         mKeys.add(nextIndex, key);
                     }
                 }
-
+                Log.d("WQ", key);
                 notifyDataSetChanged();
             }
 
@@ -124,10 +124,11 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageViewHold
         ////////////////////////////////////////////////////////////
 
     }
+
     @Override
     public ChatMessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = activity.getLayoutInflater().inflate(R.layout.chat_message,parent,false);
-        return new ChatMessageViewHolder(view,activity);
+        View view = activity.getLayoutInflater().inflate(R.layout.chat_message, parent, false);
+        return new ChatMessageViewHolder(view, activity);
     }
 
     @Override
