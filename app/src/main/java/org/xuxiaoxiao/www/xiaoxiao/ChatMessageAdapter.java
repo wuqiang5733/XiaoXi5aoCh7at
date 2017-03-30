@@ -127,7 +127,7 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageViewHold
     @Override
     public ChatMessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = activity.getLayoutInflater().inflate(R.layout.chat_message,parent,false);
-        return new ChatMessageViewHolder(view);
+        return new ChatMessageViewHolder(view,activity);
     }
 
     @Override
