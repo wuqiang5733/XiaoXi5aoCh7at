@@ -22,7 +22,6 @@ public class ChatMessageLab {
 
     public ChatMessageLab(Context context){
 
-
     }
 
     public List<ChatMessage> getChatMessages(){
