@@ -30,6 +30,11 @@ public class ChatFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_chat,container,false);
         mChatRecyclerView = (RecyclerView) view.findViewById(R.id.chat_recycler_view);
         mChatRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+//        ChatMessageLab.get(getActivity()).getChatMessages();
+
+        ChatMessageAdapter chatMessageAdapter = new ChatMessageAdapter(getActivity(),ChatMessageLab.get(getActivity()).getChatMessages());
+        mChatRecyclerView.setAdapter(chatMessageAdapter);
         return view;
     }
 }
