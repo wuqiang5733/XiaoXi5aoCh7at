@@ -7,6 +7,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
 //import static org.xuxiaoxiao.www.xiaoxiao.R.id.author;
 
 /**
@@ -23,6 +25,8 @@ public class ChatMessageViewHolder extends RecyclerView.ViewHolder implements Vi
 
     private ChatMessage mChatMessage;
     private Activity activity;
+
+
 
     public ChatMessageViewHolder(View itemView,Activity activity) {
         super(itemView);

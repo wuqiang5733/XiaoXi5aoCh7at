@@ -32,6 +32,8 @@ public class ChatFragment extends Fragment {
     private ChatMessageAdapter chatMessageAdapter;
     private EditText messageInputText;
 
+    private BeatBox mBeatBox;
+
 
     public static ChatFragment newInstance() {
         return new ChatFragment();
@@ -43,6 +45,11 @@ public class ChatFragment extends Fragment {
 
         // Setup our Wilddog mWilddogRef
         mWilddogRef = WilddogSync.getInstance().getReference().child("chat");
+        // 初始化声音方面
+        mBeatBox = new BeatBox(getActivity());
+        // 生成声音
+
+
     }
 
     @Nullable
@@ -52,7 +59,7 @@ public class ChatFragment extends Fragment {
         mChatRecyclerView = (RecyclerView) view.findViewById(R.id.chat_recycler_view);
         mChatRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        chatMessageAdapter = new ChatMessageAdapter(getActivity(), mWilddogRef.limitToLast(10));
+        chatMessageAdapter = new ChatMessageAdapter(getActivity(), mWilddogRef.limitToLast(10),mBeatBox.getSounds(),mBeatBox);
         mChatRecyclerView.setAdapter(chatMessageAdapter);
 
         chatMessageAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
@@ -127,4 +134,10 @@ public class ChatFragment extends Fragment {
 //        super.onResume();
 //        mWilddogRef.getRoot().child(".info/connected").addChildEventListener();
 //    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mBeatBox.release();
+    }
 }

@@ -13,6 +13,7 @@ import com.wilddog.client.SyncError;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by WuQiang on 2017/3/30.
@@ -28,12 +29,19 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageViewHold
     ////////////////////////////////
 
     private Activity activity;
+    private List<Sound> mSounds;
+    private BeatBox mBeatBox;
+    // 播放声音生成随机数
+    Random rand = new Random();
 
-    public ChatMessageAdapter(Activity activity, Query mRef) {
+    public ChatMessageAdapter(Activity activity, Query mRef,List<Sound> sounds,BeatBox beatbox) {
         this.activity = activity;
         /////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////
         this.mRef = mRef;
+        this.mSounds = sounds;
+        this.mBeatBox = beatbox;
+
         mModels = new ArrayList<>();
         mKeys = new ArrayList<String>();
         // Look for all child events. We will then map them to our own internal ArrayList, which backs ListView
@@ -61,6 +69,7 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageViewHold
                 }
                 Log.d("WQ", key);
                 notifyDataSetChanged();
+                mBeatBox.play(mSounds.get(rand.nextInt(4)));
             }
 
             @Override
