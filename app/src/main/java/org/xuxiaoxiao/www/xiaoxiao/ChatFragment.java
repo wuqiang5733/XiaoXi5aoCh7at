@@ -1,5 +1,6 @@
 package org.xuxiaoxiao.www.xiaoxiao;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -7,6 +8,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -19,6 +23,8 @@ import com.wilddog.client.SyncError;
 import com.wilddog.client.SyncReference;
 import com.wilddog.client.ValueEventListener;
 import com.wilddog.client.WilddogSync;
+
+import org.xuxiaoxiao.www.xiaoxiao.chatConfig.ChatConfigActivity;
 
 /**
  * Created by WuQiang on 2017/3/30.
@@ -42,14 +48,31 @@ public class ChatFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
 
         // Setup our Wilddog mWilddogRef
         mWilddogRef = WilddogSync.getInstance().getReference().child("chat");
         // 初始化声音方面
         mBeatBox = new BeatBox(getActivity());
-        // 生成声音
+    }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.chat_conf, menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.chat_config:
+                Toast.makeText(getActivity(),"dddd",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), ChatConfigActivity.class);
+                startActivity(intent);
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 
     @Nullable
@@ -59,7 +82,7 @@ public class ChatFragment extends Fragment {
         mChatRecyclerView = (RecyclerView) view.findViewById(R.id.chat_recycler_view);
         mChatRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        chatMessageAdapter = new ChatMessageAdapter(getActivity(), mWilddogRef.limitToLast(10),mBeatBox.getSounds(),mBeatBox);
+        chatMessageAdapter = new ChatMessageAdapter(getActivity(), mWilddogRef.limitToLast(10), mBeatBox.getSounds(), mBeatBox);
         mChatRecyclerView.setAdapter(chatMessageAdapter);
 
         chatMessageAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
@@ -122,8 +145,7 @@ public class ChatFragment extends Fragment {
     }
 
 
-
-        @Override
+    @Override
     public void onStop() {
         super.onStop();
         mWilddogRef.getRoot().child(".info/connected").removeEventListener(mConnectedListener);
