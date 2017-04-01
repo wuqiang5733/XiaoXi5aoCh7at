@@ -27,6 +27,8 @@ import com.wilddog.client.WilddogSync;
 import org.xuxiaoxiao.www.xiaoxiao.chatConfig.ChatConfigActivity;
 import org.xuxiaoxiao.www.xiaoxiao.infrastructure.BaseFragment;
 
+import java.util.Random;
+
 /**
  * Created by WuQiang on 2017/3/30.
  */
@@ -49,6 +51,7 @@ public class ChatFragment extends BaseFragment {
 
 
 
+
     public static ChatFragment newInstance() {
         return new ChatFragment();
     }
@@ -60,7 +63,6 @@ public class ChatFragment extends BaseFragment {
 
         // Setup our Wilddog mWilddogRef
         mWilddogRef = WilddogSync.getInstance().getReference().child("chat");
-        // 初始化声音方面
     }
 
     @Override
@@ -89,7 +91,7 @@ public class ChatFragment extends BaseFragment {
         mChatRecyclerView = (RecyclerView) view.findViewById(R.id.chat_recycler_view);
         mChatRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        chatMessageAdapter = new ChatMessageAdapter(getActivity(), mWilddogRef.limitToLast(10), beatBox.getSounds(),beatBox);
+        chatMessageAdapter = new ChatMessageAdapter(getActivity(), mWilddogRef.limitToLast(10),sparseArray);
         mChatRecyclerView.setAdapter(chatMessageAdapter);
 
         chatMessageAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
@@ -146,7 +148,7 @@ public class ChatFragment extends BaseFragment {
             // Create our 'model', a Chat object
             // Create a new, auto-generated child of that chat location, and save our chat data there
             String key = mWilddogRef.push().getKey();
-            ChatMessage chat = new ChatMessage(input, "WQ",key);
+            ChatMessage chat = new ChatMessage(input,user.getName(),key);
             Log.d("WQ_ChatFragment", key);
             mWilddogRef.child(key).setValue(chat);
             messageInputText.setText("");

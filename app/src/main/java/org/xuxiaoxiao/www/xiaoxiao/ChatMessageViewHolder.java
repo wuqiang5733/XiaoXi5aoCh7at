@@ -7,6 +7,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.xuxiaoxiao.www.xiaoxiao.infrastructure.User;
+
 //import static org.xuxiaoxiao.www.xiaoxiao.R.id.author;
 
 /**
@@ -26,12 +28,14 @@ public class ChatMessageViewHolder extends RecyclerView.ViewHolder implements Vi
 
     private ChatMessage mChatMessage;
     private Activity activity;
+    private User user;
 
 
 
-    public ChatMessageViewHolder(View itemView,Activity activity) {
+    public ChatMessageViewHolder(View itemView, Activity activity, User user) {
         super(itemView);
         this.activity = activity;
+        this.user = user;
         leftMsg = (TextView) itemView.findViewById(R.id.left_msg);
         rightMsg = (TextView) itemView.findViewById(R.id.right_msg);
 
@@ -49,7 +53,7 @@ public class ChatMessageViewHolder extends RecyclerView.ViewHolder implements Vi
     public void bind(ChatMessage chatmessage) {
         mChatMessage = chatmessage;
 
-        if (mChatMessage.getAuthor() != null && mChatMessage.getAuthor().equals("WQ")) {
+        if (mChatMessage.getAuthor() != null && mChatMessage.getAuthor().equals(user.getName())) {
             rightLayout.setVisibility(View.VISIBLE);
             leftLayout.setVisibility(View.GONE);
             rightMsg.setText(mChatMessage.getMessage());

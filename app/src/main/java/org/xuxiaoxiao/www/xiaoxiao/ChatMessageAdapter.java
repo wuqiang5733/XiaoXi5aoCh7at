@@ -3,6 +3,7 @@ package org.xuxiaoxiao.www.xiaoxiao;
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -13,6 +14,7 @@ import com.wilddog.client.SyncError;
 
 import org.xuxiaoxiao.www.xiaoxiao.infrastructure.BeatBox;
 import org.xuxiaoxiao.www.xiaoxiao.infrastructure.Sound;
+import org.xuxiaoxiao.www.xiaoxiao.infrastructure.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,16 +36,21 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageViewHold
     private Activity activity;
     private List<Sound> mSounds;
     private BeatBox mBeatBox;
+    private SparseArray<Object> sparseArray;
+    private User user;
     // 播放声音生成随机数
     Random rand = new Random();
 
-    public ChatMessageAdapter(Activity activity, Query mRef,List<Sound> sounds,BeatBox beatbox) {
+    public ChatMessageAdapter(Activity activity, Query mRef, SparseArray<Object> sparseArray) {
         this.activity = activity;
         /////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////
         this.mRef = mRef;
-        this.mSounds = sounds;
-        this.mBeatBox = beatbox;
+//        this.mSounds = sounds;
+//        this.mBeatBox = beatbox;
+        this.mBeatBox = (BeatBox)sparseArray.get(0);
+        this.mSounds = mBeatBox.getSounds();
+        this.user = (User)sparseArray.get(1);
 
         mModels = new ArrayList<>();
         mKeys = new ArrayList<String>();
@@ -140,7 +147,7 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageViewHold
     @Override
     public ChatMessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = activity.getLayoutInflater().inflate(R.layout.chat_message, parent, false);
-        return new ChatMessageViewHolder(view, activity);
+        return new ChatMessageViewHolder(view, activity, user);
     }
 
     @Override
