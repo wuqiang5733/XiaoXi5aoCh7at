@@ -1,4 +1,4 @@
-package org.xuxiaoxiao.www.xiaoxiao;
+package org.xuxiaoxiao.www.xiaoxiao.infrastructure;
 
 import android.content.Context;
 import android.content.res.AssetFileDescriptor;
@@ -10,6 +10,10 @@ import android.util.Log;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * Created by WuQiang on 2017/4/1.
+ */
 
 public class BeatBox {
     // for loggin

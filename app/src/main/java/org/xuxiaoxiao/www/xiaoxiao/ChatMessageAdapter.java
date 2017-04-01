@@ -11,6 +11,9 @@ import com.wilddog.client.DataSnapshot;
 import com.wilddog.client.Query;
 import com.wilddog.client.SyncError;
 
+import org.xuxiaoxiao.www.xiaoxiao.infrastructure.BeatBox;
+import org.xuxiaoxiao.www.xiaoxiao.infrastructure.Sound;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -67,7 +70,7 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageViewHold
                         mKeys.add(nextIndex, key);
                     }
                 }
-                Log.d("WQ", key);
+                Log.d("WQ_ChatMessageAdapter", key);
                 notifyDataSetChanged();
                 mBeatBox.play(mSounds.get(rand.nextInt(4)));
             }

@@ -7,8 +7,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.List;
-
 //import static org.xuxiaoxiao.www.xiaoxiao.R.id.author;
 
 /**
@@ -18,6 +16,9 @@ import java.util.List;
 public class ChatMessageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
     private TextView leftMsg;
     private TextView rightMsg;
+
+    private TextView leftMsgID;
+    private TextView rightMsgID;
 
     /////////////
     private LinearLayout leftLayout;
@@ -34,6 +35,9 @@ public class ChatMessageViewHolder extends RecyclerView.ViewHolder implements Vi
         leftMsg = (TextView) itemView.findViewById(R.id.left_msg);
         rightMsg = (TextView) itemView.findViewById(R.id.right_msg);
 
+        leftMsgID = (TextView) itemView.findViewById(R.id.left_msgid);
+        rightMsgID = (TextView) itemView.findViewById(R.id.right_msgid);
+
         leftLayout = (LinearLayout) itemView.findViewById(R.id.left_layout);
         rightLayout = (LinearLayout) itemView.findViewById(R.id.right_layout);
 
@@ -49,11 +53,13 @@ public class ChatMessageViewHolder extends RecyclerView.ViewHolder implements Vi
             rightLayout.setVisibility(View.VISIBLE);
             leftLayout.setVisibility(View.GONE);
             rightMsg.setText(mChatMessage.getMessage());
+            rightMsgID.setText(mChatMessage.getMessageID());
         } else {
             // 如果是收到的消息，则显示左边的消息布局，将右边的消息布局隐藏
             leftLayout.setVisibility(View.VISIBLE);
             rightLayout.setVisibility(View.GONE);
             leftMsg.setText(mChatMessage.getMessage());
+            leftMsgID.setText(mChatMessage.getMessageID());
         }
 
     }

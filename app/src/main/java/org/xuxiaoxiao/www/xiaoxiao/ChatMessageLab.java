@@ -28,7 +28,7 @@ public class ChatMessageLab {
          List<ChatMessage> chatMessages = new ArrayList<>() ;
 
         for (int i =0 ;i < 100; i++){
-            chatMessages.add (new ChatMessage(String.valueOf(i),"WQ" + i));
+            chatMessages.add (new ChatMessage(String.valueOf(i),"WQ" + i,"ID"));
         }
 
         return chatMessages;

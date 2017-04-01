@@ -8,15 +8,17 @@ public class ChatMessage {
 
     private String message;
     private String author;
+    private String messageID;
 
     // Required default constructor for Wilddog object mapping
     @SuppressWarnings("unused")
     private ChatMessage() {
     }
 
-    ChatMessage(String message, String author) {
+    ChatMessage(String message, String author, String messageid) {
         this.message = message;
         this.author = author;
+        this.messageID = messageid;
     }
 
     public String getMessage() {
@@ -25,5 +27,13 @@ public class ChatMessage {
 
     public String getAuthor() {
         return author;
+    }
+
+    public String getMessageID() {
+        return messageID;
+    }
+
+    public void setMessageID(String messageID) {
+        this.messageID = messageID;
     }
 }

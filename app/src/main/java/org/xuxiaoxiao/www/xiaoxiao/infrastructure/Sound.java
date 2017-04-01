@@ -1,4 +1,4 @@
-package org.xuxiaoxiao.www.xiaoxiao;
+package org.xuxiaoxiao.www.xiaoxiao.infrastructure;
 
 public class Sound {
     private String mAssetPath;

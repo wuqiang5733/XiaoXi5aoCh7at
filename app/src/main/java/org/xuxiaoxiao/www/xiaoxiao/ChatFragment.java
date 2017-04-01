@@ -3,9 +3,9 @@ package org.xuxiaoxiao.www.xiaoxiao;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,12 +25,21 @@ import com.wilddog.client.ValueEventListener;
 import com.wilddog.client.WilddogSync;
 
 import org.xuxiaoxiao.www.xiaoxiao.chatConfig.ChatConfigActivity;
+import org.xuxiaoxiao.www.xiaoxiao.infrastructure.BaseFragment;
 
 /**
  * Created by WuQiang on 2017/3/30.
  */
 
-public class ChatFragment extends Fragment {
+/**
+ * 在 ChatMessage 当中添加一个属性需要改的地方：
+ 1：Model 也就是 ChatMessage 当中把这个属性加上
+ 2：与 Model 对应的视图，XML 文件需要改
+ 3：bind 方法需要改
+ 4：在发送信息的时候，这个新加的属性也要发送出去
+ */
+
+public class ChatFragment extends BaseFragment {
     private RecyclerView mChatRecyclerView;
 
     private SyncReference mWilddogRef;
@@ -38,7 +47,6 @@ public class ChatFragment extends Fragment {
     private ChatMessageAdapter chatMessageAdapter;
     private EditText messageInputText;
 
-    private BeatBox mBeatBox;
 
 
     public static ChatFragment newInstance() {
@@ -53,7 +61,6 @@ public class ChatFragment extends Fragment {
         // Setup our Wilddog mWilddogRef
         mWilddogRef = WilddogSync.getInstance().getReference().child("chat");
         // 初始化声音方面
-        mBeatBox = new BeatBox(getActivity());
     }
 
     @Override
@@ -82,7 +89,7 @@ public class ChatFragment extends Fragment {
         mChatRecyclerView = (RecyclerView) view.findViewById(R.id.chat_recycler_view);
         mChatRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        chatMessageAdapter = new ChatMessageAdapter(getActivity(), mWilddogRef.limitToLast(10), mBeatBox.getSounds(), mBeatBox);
+        chatMessageAdapter = new ChatMessageAdapter(getActivity(), mWilddogRef.limitToLast(10), beatBox.getSounds(),beatBox);
         mChatRecyclerView.setAdapter(chatMessageAdapter);
 
         chatMessageAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
@@ -137,9 +144,11 @@ public class ChatFragment extends Fragment {
         String input = messageInputText.getText().toString();
         if (!input.equals("")) {
             // Create our 'model', a Chat object
-            ChatMessage chat = new ChatMessage(input, "WQ");
             // Create a new, auto-generated child of that chat location, and save our chat data there
-            mWilddogRef.push().setValue(chat);
+            String key = mWilddogRef.push().getKey();
+            ChatMessage chat = new ChatMessage(input, "WQ",key);
+            Log.d("WQ_ChatFragment", key);
+            mWilddogRef.child(key).setValue(chat);
             messageInputText.setText("");
         }
     }
@@ -160,6 +169,6 @@ public class ChatFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mBeatBox.release();
+        beatBox.release();
     }
 }
