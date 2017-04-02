@@ -3,7 +3,6 @@ package org.xuxiaoxiao.www.xiaoxiao;
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -18,7 +17,6 @@ import org.xuxiaoxiao.www.xiaoxiao.infrastructure.User;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by WuQiang on 2017/3/30.
@@ -31,32 +29,20 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageViewHold
     private List<ChatMessage> mModels;
     private List<String> mKeys;
     private ChildEventListener mListener;
+//    private OkHttpClient okHttpClient;
     ////////////////////////////////
 
     private Activity activity;
-//    private List<Sound> mSounds;
-//    private BeatBox mBeatBox;
-    private SparseArray<Object> sparseArray;
+
     private User user;
     private SoundPool soundPool;
     private ChatApplication application;
-    // 播放声音生成随机数
-    Random rand = new Random();
+
 
     public ChatMessageAdapter(Activity activity, Query mRef, final ChatApplication application) {
         this.activity = activity;
         this.application = application;
-        /////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////
         this.mRef = mRef;
-        this.sparseArray = sparseArray;
-//        this.mSounds = sounds;
-//        this.mBeatBox = beatbox;
-//        this.mBeatBox = (BeatBox)sparseArray.get(0);
-//        this.mSounds = mBeatBox.getSounds();
-//        this.user = (User)sparseArray.get(1);
-//        this.soundPool = (SoundPool) sparseArray.get(0);
-//        this.application = (ChatApplication) sparseArray.get(2);
         this.soundPool = application.getSoundPool();
         this.user = application.getUser();
 
@@ -85,9 +71,8 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageViewHold
                         mKeys.add(nextIndex, key);
                     }
                 }
-//                Log.d("WQ_ChatMessageAdapter", key);
                 notifyDataSetChanged();
-                if (application.isAlarmOn){
+                if (application.isAlarmOn) {
                     soundPool.playSoundDestroy();
 
                 }

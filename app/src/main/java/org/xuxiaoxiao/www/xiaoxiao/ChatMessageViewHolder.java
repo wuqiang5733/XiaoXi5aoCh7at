@@ -2,6 +2,7 @@ package org.xuxiaoxiao.www.xiaoxiao;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,15 +17,12 @@ import org.xuxiaoxiao.www.xiaoxiao.infrastructure.User;
  */
 
 public class ChatMessageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-    private TextView leftMsg;
-    private TextView rightMsg;
+    private TextView msg;
 
-    private TextView leftMsgID;
-    private TextView rightMsgID;
+    private TextView msgID;
 
     /////////////
-    private LinearLayout leftLayout;
-    private LinearLayout rightLayout;
+    private LinearLayout layout;
 
     private ChatMessage mChatMessage;
     private Activity activity;
@@ -36,14 +34,11 @@ public class ChatMessageViewHolder extends RecyclerView.ViewHolder implements Vi
         super(itemView);
         this.activity = activity;
         this.user = user;
-        leftMsg = (TextView) itemView.findViewById(R.id.left_msg);
-        rightMsg = (TextView) itemView.findViewById(R.id.right_msg);
+        msg = (TextView) itemView.findViewById(R.id.msg);
 
-        leftMsgID = (TextView) itemView.findViewById(R.id.left_msgid);
-        rightMsgID = (TextView) itemView.findViewById(R.id.right_msgid);
+        msgID = (TextView) itemView.findViewById(R.id.msgid);
 
-        leftLayout = (LinearLayout) itemView.findViewById(R.id.left_layout);
-        rightLayout = (LinearLayout) itemView.findViewById(R.id.right_layout);
+        layout = (LinearLayout) itemView.findViewById(R.id.layout);
 
         itemView.setOnClickListener(this);
         ////////////////////////
@@ -52,20 +47,25 @@ public class ChatMessageViewHolder extends RecyclerView.ViewHolder implements Vi
 
     public void bind(ChatMessage chatmessage) {
         mChatMessage = chatmessage;
+        boolean isMine = mChatMessage.getAuthor() != null && mChatMessage.getAuthor().equals(user.getName());
 
-        if (mChatMessage.getAuthor() != null && mChatMessage.getAuthor().equals(user.getName())) {
-            rightLayout.setVisibility(View.VISIBLE);
-            leftLayout.setVisibility(View.GONE);
-            rightMsg.setText(mChatMessage.getMessage());
-            rightMsgID.setText(mChatMessage.getMessageID());
-        } else {
-            // 如果是收到的消息，则显示左边的消息布局，将右边的消息布局隐藏
-            leftLayout.setVisibility(View.VISIBLE);
-            rightLayout.setVisibility(View.GONE);
-            leftMsg.setText(mChatMessage.getMessage());
-            leftMsgID.setText(mChatMessage.getMessageID());
+
+        msg.setText(mChatMessage.getMessage());
+        msgID.setText(mChatMessage.getMessageID());
+
+        layout.setBackgroundResource(isMine ? R.drawable.message_right : R.drawable.message_left);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        if(!isMine)
+        {
+            params.gravity = Gravity.LEFT;
         }
-
+        else
+        {
+            params.gravity = Gravity.RIGHT;
+        }
+        layout.setLayoutParams(params);
     }
 
     @Override
@@ -76,7 +76,8 @@ public class ChatMessageViewHolder extends RecyclerView.ViewHolder implements Vi
 }
 
 /**
- *
+ *            layout.setBackgroundResource(R.drawable.message_right);
+
  *     @Override
 protected void populateView(Context context, MessageViewHolder holder, Chat chat) {
 // 设置发送者
