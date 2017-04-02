@@ -1,8 +1,6 @@
 package org.xuxiaoxiao.www.xiaoxiao.infrastructure;
 
 
-import android.util.SparseArray;
-
 import com.wilddog.wilddogcore.WilddogApp;
 import com.wilddog.wilddogcore.WilddogOptions;
 
@@ -16,7 +14,7 @@ import java.util.Random;
 public class ChatApplication extends android.app.Application {
 
     private User user;
-    private SparseArray<Object> sparseArray;
+//    private SparseArray<Object> sparseArray;
     Random rand = new Random();
     public static boolean isAlarmOn = true;
     private SoundPool soundPool;
@@ -32,10 +30,10 @@ public class ChatApplication extends android.app.Application {
         user = new User(String.valueOf(rand.nextInt(4000)));
         // 注意这儿的顺序是相当重要的！！必须先得把 SoundPool 跟 User 初始化了，才给附给 sparseArray
         soundPool = new SoundPool(this);
-        sparseArray = new SparseArray<>();
-        sparseArray.put(0,soundPool);
-        sparseArray.put(1,user);
-        sparseArray.put(3,this);
+//        sparseArray = new SparseArray<>();
+//        sparseArray.put(0,soundPool);
+//        sparseArray.put(1,user);
+//        sparseArray.put(3,this);
     }
 
 
@@ -44,9 +42,9 @@ public class ChatApplication extends android.app.Application {
         return user;
     }
 
-    public SparseArray<Object> getSparseArray(){
-        return sparseArray;
-    }
+//    public SparseArray<Object> getSparseArray(){
+//        return sparseArray;
+//    }
 
     public SoundPool getSoundPool() {
         return soundPool;

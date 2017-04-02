@@ -43,9 +43,9 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageViewHold
     // 播放声音生成随机数
     Random rand = new Random();
 
-    public ChatMessageAdapter(Activity activity, Query mRef, SparseArray<Object> sparseArray) {
+    public ChatMessageAdapter(Activity activity, Query mRef, final ChatApplication application) {
         this.activity = activity;
-
+        this.application = application;
         /////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////
         this.mRef = mRef;
@@ -54,9 +54,11 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageViewHold
 //        this.mBeatBox = beatbox;
 //        this.mBeatBox = (BeatBox)sparseArray.get(0);
 //        this.mSounds = mBeatBox.getSounds();
-        this.user = (User)sparseArray.get(1);
-        this.soundPool = (SoundPool) sparseArray.get(0);
-        this.application = (ChatApplication) sparseArray.get(2);
+//        this.user = (User)sparseArray.get(1);
+//        this.soundPool = (SoundPool) sparseArray.get(0);
+//        this.application = (ChatApplication) sparseArray.get(2);
+        this.soundPool = application.getSoundPool();
+        this.user = application.getUser();
 
         mModels = new ArrayList<>();
         mKeys = new ArrayList<String>();

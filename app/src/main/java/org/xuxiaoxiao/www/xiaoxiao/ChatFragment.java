@@ -89,7 +89,7 @@ public class ChatFragment extends BaseFragment {
         mChatRecyclerView = (RecyclerView) view.findViewById(R.id.chat_recycler_view);
         mChatRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        chatMessageAdapter = new ChatMessageAdapter(getActivity(), mWilddogRef.limitToLast(10),sparseArray);
+        chatMessageAdapter = new ChatMessageAdapter(getActivity(), mWilddogRef.limitToLast(10),application);
         mChatRecyclerView.setAdapter(chatMessageAdapter);
 
         chatMessageAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
