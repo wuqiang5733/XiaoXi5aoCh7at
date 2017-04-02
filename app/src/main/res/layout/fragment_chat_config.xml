@@ -9,11 +9,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/textView" />
 
-    <Switch
-        android:text="Switch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/soundConfig" />
 
     <EditText
         android:layout_width="match_parent"
@@ -22,4 +17,12 @@
         android:text="Name"
         android:ems="10"
         android:id="@+id/userEditText" />
+
+    <ToggleButton
+        android:text="ToggleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/soundConfig"
+        android:textOff="Off"
+        android:textOn="On"/>
 </LinearLayout>

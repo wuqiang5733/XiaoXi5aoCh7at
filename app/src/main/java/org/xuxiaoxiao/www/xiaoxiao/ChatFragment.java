@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,8 +25,6 @@ import com.wilddog.client.WilddogSync;
 
 import org.xuxiaoxiao.www.xiaoxiao.chatConfig.ChatConfigActivity;
 import org.xuxiaoxiao.www.xiaoxiao.infrastructure.BaseFragment;
-
-import java.util.Random;
 
 /**
  * Created by WuQiang on 2017/3/30.
@@ -63,6 +60,7 @@ public class ChatFragment extends BaseFragment {
 
         // Setup our Wilddog mWilddogRef
         mWilddogRef = WilddogSync.getInstance().getReference().child("chat");
+//        soundPool.playSoundDestroy();
     }
 
     @Override
@@ -75,7 +73,7 @@ public class ChatFragment extends BaseFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.chat_config:
-                Toast.makeText(getActivity(),"dddd",Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(),"dddd",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getActivity(), ChatConfigActivity.class);
                 startActivity(intent);
             default:
@@ -149,7 +147,7 @@ public class ChatFragment extends BaseFragment {
             // Create a new, auto-generated child of that chat location, and save our chat data there
             String key = mWilddogRef.push().getKey();
             ChatMessage chat = new ChatMessage(input,user.getName(),key);
-            Log.d("WQ_ChatFragment", key);
+//            Log.d("WQ_ChatFragment", key);
             mWilddogRef.child(key).setValue(chat);
             messageInputText.setText("");
         }
@@ -171,6 +169,7 @@ public class ChatFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        beatBox.release();
+//        beatBox.release();
+//        Log.d("WQ_ChatFragment","onDestroy");
     }
 }

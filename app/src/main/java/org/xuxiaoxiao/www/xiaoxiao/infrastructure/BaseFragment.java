@@ -11,16 +11,17 @@ import android.util.SparseArray;
 
 public class BaseFragment extends Fragment {
     protected ChatApplication application;
-    protected BeatBox beatBox;
     protected User user;
     protected SparseArray<Object> sparseArray;
+    protected SoundPool soundPool;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         application = (ChatApplication) getActivity().getApplication();
-        beatBox = application.getBeatBox();
-        user = application.getUser();
+//        user = application.getUser();
         sparseArray = application.getSparseArray();
+        soundPool = application.getSoundPool();
+        user = application.getUser();
     }
 }

@@ -12,8 +12,8 @@ import com.wilddog.client.DataSnapshot;
 import com.wilddog.client.Query;
 import com.wilddog.client.SyncError;
 
-import org.xuxiaoxiao.www.xiaoxiao.infrastructure.BeatBox;
-import org.xuxiaoxiao.www.xiaoxiao.infrastructure.Sound;
+import org.xuxiaoxiao.www.xiaoxiao.infrastructure.ChatApplication;
+import org.xuxiaoxiao.www.xiaoxiao.infrastructure.SoundPool;
 import org.xuxiaoxiao.www.xiaoxiao.infrastructure.User;
 
 import java.util.ArrayList;
@@ -34,23 +34,29 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageViewHold
     ////////////////////////////////
 
     private Activity activity;
-    private List<Sound> mSounds;
-    private BeatBox mBeatBox;
+//    private List<Sound> mSounds;
+//    private BeatBox mBeatBox;
     private SparseArray<Object> sparseArray;
     private User user;
+    private SoundPool soundPool;
+    private ChatApplication application;
     // 播放声音生成随机数
     Random rand = new Random();
 
     public ChatMessageAdapter(Activity activity, Query mRef, SparseArray<Object> sparseArray) {
         this.activity = activity;
+
         /////////////////////////////////////////////////////////////////
         ////////////////////////////////////////////////////////////////
         this.mRef = mRef;
+        this.sparseArray = sparseArray;
 //        this.mSounds = sounds;
 //        this.mBeatBox = beatbox;
-        this.mBeatBox = (BeatBox)sparseArray.get(0);
-        this.mSounds = mBeatBox.getSounds();
+//        this.mBeatBox = (BeatBox)sparseArray.get(0);
+//        this.mSounds = mBeatBox.getSounds();
         this.user = (User)sparseArray.get(1);
+        this.soundPool = (SoundPool) sparseArray.get(0);
+        this.application = (ChatApplication) sparseArray.get(2);
 
         mModels = new ArrayList<>();
         mKeys = new ArrayList<String>();
@@ -77,9 +83,12 @@ public class ChatMessageAdapter extends RecyclerView.Adapter<ChatMessageViewHold
                         mKeys.add(nextIndex, key);
                     }
                 }
-                Log.d("WQ_ChatMessageAdapter", key);
+//                Log.d("WQ_ChatMessageAdapter", key);
                 notifyDataSetChanged();
-                mBeatBox.play(mSounds.get(rand.nextInt(4)));
+                if (application.isAlarmOn){
+                    soundPool.playSoundDestroy();
+
+                }
             }
 
             @Override
