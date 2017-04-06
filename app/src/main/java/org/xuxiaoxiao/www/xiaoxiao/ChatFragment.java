@@ -15,9 +15,12 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 import com.wilddog.client.DataSnapshot;
 import com.wilddog.client.SyncError;
 import com.wilddog.client.SyncReference;
@@ -49,8 +52,9 @@ public class ChatFragment extends BaseFragment {
     private Button mPopupBottomSheetDialog;
 //    private SelectBottomSheetFragment mBottomSheetDialog;
     private SelectBottomSheetContainter mSelectBottomSheetContainter;
+    private LinearLayout mTopPanel;
 
-
+    private boolean layoutToggle = false;
 
 
     public static ChatFragment newInstance() {
@@ -89,22 +93,37 @@ public class ChatFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_chat, container, false);
+        final View view = inflater.inflate(R.layout.fragment_chat, container, false);
         mChatRecyclerView = (RecyclerView) view.findViewById(R.id.chat_recycler_view);
         mChatRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mPopupBottomSheetDialog = (Button) view.findViewById(R.id.popupBottomSheetDialog);
+        mTopPanel = (LinearLayout)view.findViewById(R.id.messageTopPanel);
 
         chatMessageAdapter = new ChatMessageAdapter(getActivity(), mWilddogRef.limitToLast(10),application);
         mChatRecyclerView.setAdapter(chatMessageAdapter);
 
+        // 添加可折叠部分
+        final ExpandableRelativeLayout expandableLayout
+                = (ExpandableRelativeLayout) view.findViewById(R.id.expandableLayout);
         mPopupBottomSheetDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TextView test = new TextView(getActivity());
-                test.setText("武强");
+                // toggle expand, collapse
 
-                mSelectBottomSheetContainter = new SelectBottomSheetContainter();
-                mSelectBottomSheetContainter.show(getFragmentManager(),"12345");
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)mTopPanel.getLayoutParams();
+                if (layoutToggle){
+                    params.topMargin += 140;
+
+                }else {
+                    params.topMargin -= 140;
+
+                }
+                layoutToggle = !layoutToggle;
+                mTopPanel.requestLayout();
+                expandableLayout.toggle();
+//                view.invalidate();
+//                mSelectBottomSheetContainter = new SelectBottomSheetContainter();
+//                mSelectBottomSheetContainter.show(getFragmentManager(),"12345");
 //                mBottomSheetDialog = new SelectBottomSheetFragment(getActivity());
 //                mBottomSheetDialog.setContentView(R.layout.fragment_bottom_sheet);
 //                mBottomSheetDialog.show();
