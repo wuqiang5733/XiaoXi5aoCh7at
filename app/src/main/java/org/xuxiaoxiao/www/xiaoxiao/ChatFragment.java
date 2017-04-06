@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +46,9 @@ public class ChatFragment extends BaseFragment {
     private ValueEventListener mConnectedListener;
     private ChatMessageAdapter chatMessageAdapter;
     private EditText messageInputText;
+    private Button mPopupBottomSheetDialog;
+//    private SelectBottomSheetFragment mBottomSheetDialog;
+    private SelectBottomSheetContainter mSelectBottomSheetContainter;
 
 
 
@@ -88,9 +92,24 @@ public class ChatFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
         mChatRecyclerView = (RecyclerView) view.findViewById(R.id.chat_recycler_view);
         mChatRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mPopupBottomSheetDialog = (Button) view.findViewById(R.id.popupBottomSheetDialog);
 
         chatMessageAdapter = new ChatMessageAdapter(getActivity(), mWilddogRef.limitToLast(10),application);
         mChatRecyclerView.setAdapter(chatMessageAdapter);
+
+        mPopupBottomSheetDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TextView test = new TextView(getActivity());
+                test.setText("武强");
+
+                mSelectBottomSheetContainter = new SelectBottomSheetContainter();
+                mSelectBottomSheetContainter.show(getFragmentManager(),"12345");
+//                mBottomSheetDialog = new SelectBottomSheetFragment(getActivity());
+//                mBottomSheetDialog.setContentView(R.layout.fragment_bottom_sheet);
+//                mBottomSheetDialog.show();
+            }
+        });
 
         chatMessageAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
