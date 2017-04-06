@@ -24,7 +24,7 @@ public class ChatApplication extends android.app.Application {
         super.onCreate();
         // TODO: change this to your own Wilddog URL
 
-        WilddogOptions wilddogOptions = new WilddogOptions.Builder().setSyncUrl("https://myfirstandroidapp2017.wilddogio.com").build();
+        WilddogOptions wilddogOptions = new WilddogOptions.Builder().setSyncUrl("https://wuxu1314.wilddogio.com").build();
         WilddogApp wilddogApp = WilddogApp.initializeApp(this,wilddogOptions);
 
         user = new User(String.valueOf(rand.nextInt(4000)));

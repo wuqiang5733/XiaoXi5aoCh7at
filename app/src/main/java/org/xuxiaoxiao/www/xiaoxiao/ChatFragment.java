@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,10 +37,10 @@ import org.xuxiaoxiao.www.xiaoxiao.infrastructure.BaseFragment;
 
 /**
  * 在 ChatMessage 当中添加一个属性需要改的地方：
- 1：Model 也就是 ChatMessage 当中把这个属性加上
- 2：与 Model 对应的视图，XML 文件需要改
- 3：bind 方法需要改
- 4：在发送信息的时候，这个新加的属性也要发送出去
+ * 1：Model 也就是 ChatMessage 当中把这个属性加上
+ * 2：与 Model 对应的视图，XML 文件需要改
+ * 3：bind 方法需要改
+ * 4：在发送信息的时候，这个新加的属性也要发送出去
  */
 
 public class ChatFragment extends BaseFragment {
@@ -50,7 +51,7 @@ public class ChatFragment extends BaseFragment {
     private ChatMessageAdapter chatMessageAdapter;
     private EditText messageInputText;
     private Button mPopupBottomSheetDialog;
-//    private SelectBottomSheetFragment mBottomSheetDialog;
+    //    private SelectBottomSheetFragment mBottomSheetDialog;
     private SelectBottomSheetContainter mSelectBottomSheetContainter;
     private LinearLayout mTopPanel;
 
@@ -97,9 +98,9 @@ public class ChatFragment extends BaseFragment {
         mChatRecyclerView = (RecyclerView) view.findViewById(R.id.chat_recycler_view);
         mChatRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mPopupBottomSheetDialog = (Button) view.findViewById(R.id.popupBottomSheetDialog);
-        mTopPanel = (LinearLayout)view.findViewById(R.id.messageTopPanel);
+        mTopPanel = (LinearLayout) view.findViewById(R.id.messageTopPanel);
 
-        chatMessageAdapter = new ChatMessageAdapter(getActivity(), mWilddogRef.limitToLast(10),application);
+        chatMessageAdapter = new ChatMessageAdapter(getActivity(), mWilddogRef.limitToLast(10), application);
         mChatRecyclerView.setAdapter(chatMessageAdapter);
 
         // 添加可折叠部分
@@ -110,11 +111,11 @@ public class ChatFragment extends BaseFragment {
             public void onClick(View v) {
                 // toggle expand, collapse
 
-                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)mTopPanel.getLayoutParams();
-                if (layoutToggle){
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mTopPanel.getLayoutParams();
+                if (layoutToggle) {
                     params.topMargin += 140;
 
-                }else {
+                } else {
                     params.topMargin -= 140;
 
                 }
@@ -158,6 +159,19 @@ public class ChatFragment extends BaseFragment {
         // 输入信息发送
         messageInputText = (EditText) view.findViewById(R.id.messageInput);
 
+        messageInputText.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                // 此处为得到焦点时的处理内容
+                    getActivity().getWindow().setSoftInputMode(
+                            WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+                } else {
+                // 此处为失去焦点时的处理内容
+                }
+            }
+        });
+
         messageInputText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
@@ -184,7 +198,7 @@ public class ChatFragment extends BaseFragment {
             // Create our 'model', a Chat object
             // Create a new, auto-generated child of that chat location, and save our chat data there
             String key = mWilddogRef.push().getKey();
-            ChatMessage chat = new ChatMessage(input,user.getName(),key);
+            ChatMessage chat = new ChatMessage(input, user.getName(), key);
 //            Log.d("WQ_ChatFragment", key);
             mWilddogRef.child(key).setValue(chat);
             messageInputText.setText("");
