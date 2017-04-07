@@ -11,7 +11,7 @@
         android:id="@+id/chat_recycler_view"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_weight="60"
         android:layout_above="@+id/listFooter"
         app:stackFromEnd="true"
@@ -19,21 +19,19 @@
 
 
     <LinearLayout
-        android:layout_weight="30"
-
         android:id="@+id/listFooter"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/add_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:text="Button"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:text="Button" />
 
         <EditText
             android:id="@+id/messageInput"
@@ -49,29 +47,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:src="@android:drawable/ic_menu_send"
             android:layout_weight="1"
-            />
+            android:src="@android:drawable/ic_menu_send" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_weight="10"
-        android:visibility="gone"
+        android:layout_weight="60"
         android:id="@+id/hidden"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:orientation="vertical"
+        android:visibility="gone"
         >
 
         <EditText
             android:id="@+id/messageInput1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:inputType="textShortMessage"
             android:lines="1"
-            android:singleLine="true"
             android:text="56895d4"/>
 
         <EditText
@@ -81,7 +77,6 @@
             android:layout_weight="1"
             android:inputType="textShortMessage"
             android:lines="1"
-            android:singleLine="true"
             android:text="56895d4"/>
 
         <EditText
@@ -91,7 +86,6 @@
             android:layout_weight="1"
             android:inputType="textShortMessage"
             android:lines="1"
-            android:singleLine="true"
             android:text="56895d4"/>
 
         <EditText
@@ -101,7 +95,6 @@
             android:layout_weight="1"
             android:inputType="textShortMessage"
             android:lines="1"
-            android:singleLine="true"
             android:text="56895d4"/>
         <EditText
             android:id="@+id/messageInput5"
@@ -110,7 +103,6 @@
             android:layout_weight="1"
             android:inputType="textShortMessage"
             android:lines="1"
-            android:singleLine="true"
             android:text="56895d4"/>
         <EditText
             android:id="@+id/messageInput6"
@@ -119,7 +111,6 @@
             android:layout_weight="1"
             android:inputType="textShortMessage"
             android:lines="1"
-            android:singleLine="true"
             android:text="56895d4"/>
 
     </LinearLayout>

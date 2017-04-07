@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -61,6 +60,7 @@ public class ChatFragment extends BaseFragment {
     private FrameLayout.LayoutParams params;
     private Button mAddView;
     private LinearLayout mHiddenView;
+    private int mVisiblity;
 
 
     public static ChatFragment newInstance() {
@@ -125,8 +125,9 @@ public class ChatFragment extends BaseFragment {
         mAddView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mHiddenView.setVisibility(View.VISIBLE);
-                Log.d("WQ",String.valueOf(mHiddenView.getVisibility()));
+//                mVisiblity = mHiddenView.getVisibility();
+                mHiddenView.setVisibility((mHiddenView.getVisibility() == View.VISIBLE )? View.GONE : View.VISIBLE);
+//                Log.d("WQ",String.valueOf(mVisiblity));
             }
         });
 
