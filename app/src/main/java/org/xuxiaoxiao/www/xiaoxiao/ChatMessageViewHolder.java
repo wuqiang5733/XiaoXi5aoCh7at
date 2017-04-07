@@ -50,8 +50,8 @@ public class ChatMessageViewHolder extends RecyclerView.ViewHolder implements Vi
 
         msg.setText(mChatMessage.getMessage());
         msgID.setText(mChatMessage.getMessageID());
-        TextView test = new TextView(activity);
-        test.setText("武强");
+//        TextView test = new TextView(activity);
+//        test.setText("武强");
 
         layout.setBackgroundResource(isMine ? R.drawable.message_right : R.drawable.message_left);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -63,7 +63,7 @@ public class ChatMessageViewHolder extends RecyclerView.ViewHolder implements Vi
             params.gravity = Gravity.RIGHT;
         }
         layout.setLayoutParams(params);
-        layout.addView(test);
+//        layout.addView(test);
     }
 
     @Override

@@ -1,8 +1,10 @@
 package org.xuxiaoxiao.www.xiaoxiao;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
@@ -15,6 +17,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -120,13 +123,17 @@ public class ChatFragment extends BaseFragment {
         chatMessageAdapter = new ChatMessageAdapter(getActivity(), mWilddogRef.limitToLast(10), application);
         mChatRecyclerView.setAdapter(chatMessageAdapter);
 
-        mHiddenView = (LinearLayout)view.findViewById(R.id.hidden);
+        mHiddenView = (LinearLayout) view.findViewById(R.id.hidden);
         mAddView = (Button) view.findViewById(R.id.add_view);
         mAddView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                mVisiblity = mHiddenView.getVisibility();
-                mHiddenView.setVisibility((mHiddenView.getVisibility() == View.VISIBLE )? View.GONE : View.VISIBLE);
+                hideKeyboard(view);
+                mHiddenView.setVisibility((mHiddenView.getVisibility() == View.VISIBLE) ? View.GONE : View.VISIBLE);
+                messageInputText.clearFocus();
+                ViewPager pager = (ViewPager) view.findViewById(R.id.pager);
+                pager.setAdapter(new SampleAdapter(getActivity(), getChildFragmentManager()));
 //                Log.d("WQ",String.valueOf(mVisiblity));
             }
         });
@@ -165,7 +172,8 @@ public class ChatFragment extends BaseFragment {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
                     // 此处为得到焦点时的处理内容
-                    mChatRecyclerView.scrollToPosition((chatMessageAdapter.getItemCount() - 1));
+                    mHiddenView.setVisibility(View.GONE);
+
                 } else {
                     // 此处为失去焦点时的处理内容
                 }
@@ -176,6 +184,7 @@ public class ChatFragment extends BaseFragment {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
                 if (actionId == EditorInfo.IME_NULL && keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
+
                     sendMessage();
                 }
                 return true;
@@ -223,5 +232,15 @@ public class ChatFragment extends BaseFragment {
         super.onDestroy();
 //        beatBox.release();
 //        Log.d("WQ_ChatFragment","onDestroy");
+    }
+
+    public void showKeyboard(View v) {
+        InputMethodManager mgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        mgr.showSoftInput(messageInputText, InputMethodManager.SHOW_IMPLICIT);
+    }
+
+    public void hideKeyboard(View v) {
+        InputMethodManager mgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        mgr.hideSoftInputFromWindow(messageInputText.getWindowToken(), 0);
     }
 }

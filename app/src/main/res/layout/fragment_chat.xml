@@ -1,21 +1,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
 
     tools:context=".ChatActivity">
 
-    <android.support.v7.widget.RecyclerView
+    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/chat_recycler_view"
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="60"
         android:layout_above="@+id/listFooter"
-        app:stackFromEnd="true"
-        />
+        android:layout_weight="60"
+        app:stackFromEnd="true" />
 
 
     <LinearLayout
@@ -27,11 +25,10 @@
 
         <Button
             android:id="@+id/add_view"
-            android:layout_width="wrap_content"
+            android:layout_width="69dp"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:layout_weight="1"
-            android:text="Button" />
+            android:text="Img" />
 
         <EditText
             android:id="@+id/messageInput"
@@ -47,72 +44,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:layout_weight="1"
             android:src="@android:drawable/ic_menu_send" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_weight="60"
         android:id="@+id/hidden"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
+        android:layout_weight="60"
         android:orientation="vertical"
-        android:visibility="gone"
-        >
+        android:visibility="gone">
 
-        <EditText
-            android:id="@+id/messageInput1"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:inputType="textShortMessage"
-            android:lines="1"
-            android:text="56895d4"/>
+        <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/messageInput2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:inputType="textShortMessage"
-            android:lines="1"
-            android:text="56895d4"/>
+            <android.support.v4.view.PagerTabStrip
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"/>
 
-        <EditText
-            android:id="@+id/messageInput3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:inputType="textShortMessage"
-            android:lines="1"
-            android:text="56895d4"/>
-
-        <EditText
-            android:id="@+id/messageInput4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:inputType="textShortMessage"
-            android:lines="1"
-            android:text="56895d4"/>
-        <EditText
-            android:id="@+id/messageInput5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:inputType="textShortMessage"
-            android:lines="1"
-            android:text="56895d4"/>
-        <EditText
-            android:id="@+id/messageInput6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:inputType="textShortMessage"
-            android:lines="1"
-            android:text="56895d4"/>
-
+        </android.support.v4.view.ViewPager>
     </LinearLayout>
+
 
 </LinearLayout>
