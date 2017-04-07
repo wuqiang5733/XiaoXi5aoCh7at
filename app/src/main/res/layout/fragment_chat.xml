@@ -1,77 +1,41 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context=".ChatActivity">
 
-    <LinearLayout
-        android:id="@+id/messageTopPanel"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/chat_recycler_view"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        android:layout_above="@+id/listFooter"
         android:layout_alignParentTop="true"
-        android:orientation="vertical">
+        />
 
 
-        <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/chat_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="460dp" />
+    <LinearLayout
+        android:id="@+id/listFooter"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:id="@+id/listFooter"
-            android:layout_width="fill_parent"
+        <EditText
+            android:id="@+id/messageInput"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:inputType="textShortMessage"
+            android:lines="1"
+            android:singleLine="true" />
 
-            <Button
-                android:id="@+id/popupBottomSheetDialog"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Button" />
-
-            <EditText
-                android:id="@+id/messageInput"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:inputType="textShortMessage"
-                android:lines="1"
-                android:singleLine="true" />
-
-            <ImageButton
-                android:id="@+id/sendButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@android:drawable/ic_menu_send" />
-
-        </LinearLayout>
-
-        <com.github.aakira.expandablelayout.ExpandableRelativeLayout
-            android:id="@+id/expandableLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:ael_duration="500"
-            app:ael_expanded="false"
-            app:ael_interpolator="bounce"
-            app:ael_orientation="vertical">
-
-            <TextView
-                android:id="@+id/text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="sample" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/text"
-                android:text="sample2" />
-
-        </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
-
+        <ImageButton
+            android:id="@+id/sendButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_send" />
     </LinearLayout>
-
 
 </RelativeLayout>

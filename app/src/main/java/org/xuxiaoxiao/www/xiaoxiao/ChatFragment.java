@@ -1,7 +1,6 @@
 package org.xuxiaoxiao.www.xiaoxiao;
 
 import android.content.Intent;
-import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,7 +23,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 import com.wilddog.client.DataSnapshot;
 import com.wilddog.client.SyncError;
 import com.wilddog.client.SyncReference;
@@ -60,6 +57,8 @@ public class ChatFragment extends BaseFragment {
     private LinearLayout mTopPanel;
 
     private boolean layoutToggle = false;
+    private int mHeyBoardHeight = 1000;
+    private RelativeLayout.LayoutParams params;
 
 
     public static ChatFragment newInstance() {
@@ -107,48 +106,54 @@ public class ChatFragment extends BaseFragment {
                 //r will be populated with the coordinates of your view that area still visible.
                 view.getWindowVisibleDisplayFrame(r);
 
-                int heightDiff = view.getRootView().getHeight() - (r.bottom - r.top);
-                if (heightDiff > 500) { // if more than 100 pixels, its probably a keyboard...
-                    Log.d("WQ_ViewTreeObserver",String.valueOf(heightDiff));
+                mHeyBoardHeight = view.getRootView().getHeight() - (r.bottom - r.top);
+                if (mHeyBoardHeight > 500) { // if more than 100 pixels, its probably a keyboard...
+                    Log.d("WQ_ObseerverKeyHeight",String.valueOf(mHeyBoardHeight));
+                    Log.d("WQ_ObserverRootView",String.valueOf(view.getRootView().getHeight()));
+//                    Log.d("WQ_ViewTreeObserver",String.valueOf(heightDiff));
+//                    params = (RelativeLayout.LayoutParams) mTopPanel.getLayoutParams();
+//                    params.topMargin -= mHeyBoardHeight;
 
                 }
             }
         });
         mChatRecyclerView = (RecyclerView) view.findViewById(R.id.chat_recycler_view);
         mChatRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mPopupBottomSheetDialog = (Button) view.findViewById(R.id.popupBottomSheetDialog);
-        mTopPanel = (LinearLayout) view.findViewById(R.id.messageTopPanel);
+//        mPopupBottomSheetDialog = (Button) view.findViewById(R.id.popupBottomSheetDialog);
+//        mTopPanel = (LinearLayout) view.findViewById(R.id.messageTopPanel);
+//        params = (RelativeLayout.LayoutParams) mTopPanel.getLayoutParams();
 
         chatMessageAdapter = new ChatMessageAdapter(getActivity(), mWilddogRef.limitToLast(10), application);
         mChatRecyclerView.setAdapter(chatMessageAdapter);
 
-        // 添加可折叠部分
-        final ExpandableRelativeLayout expandableLayout
-                = (ExpandableRelativeLayout) view.findViewById(R.id.expandableLayout);
-        mPopupBottomSheetDialog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // toggle expand, collapse
 
-                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mTopPanel.getLayoutParams();
-                if (layoutToggle) {
-                    params.topMargin += 140;
-
-                } else {
-                    params.topMargin -= 140;
-
-                }
-                layoutToggle = !layoutToggle;
-                mTopPanel.requestLayout();
-                expandableLayout.toggle();
-//                view.invalidate();
-//                mSelectBottomSheetContainter = new SelectBottomSheetContainter();
-//                mSelectBottomSheetContainter.show(getFragmentManager(),"12345");
-//                mBottomSheetDialog = new SelectBottomSheetFragment(getActivity());
-//                mBottomSheetDialog.setContentView(R.layout.fragment_bottom_sheet);
-//                mBottomSheetDialog.show();
-            }
-        });
+//        // 添加可折叠部分
+//        final ExpandableRelativeLayout expandableLayout
+//                = (ExpandableRelativeLayout) view.findViewById(R.id.expandableLayout);
+//        mPopupBottomSheetDialog.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // toggle expand, collapse
+//
+//                 params = (RelativeLayout.LayoutParams) mTopPanel.getLayoutParams();
+//                if (layoutToggle) {
+//                    params.topMargin += 140;
+//
+//                } else {
+//                    params.topMargin -= 140;
+//
+//                }
+//                layoutToggle = !layoutToggle;
+//                mTopPanel.requestLayout();
+//                expandableLayout.toggle();
+////                view.invalidate();
+////                mSelectBottomSheetContainter = new SelectBottomSheetContainter();
+////                mSelectBottomSheetContainter.show(getFragmentManager(),"12345");
+////                mBottomSheetDialog = new SelectBottomSheetFragment(getActivity());
+////                mBottomSheetDialog.setContentView(R.layout.fragment_bottom_sheet);
+////                mBottomSheetDialog.show();
+//            }
+//        });
 
         chatMessageAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
@@ -178,30 +183,17 @@ public class ChatFragment extends BaseFragment {
         // 输入信息发送
         messageInputText = (EditText) view.findViewById(R.id.messageInput);
 
-        messageInputText.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                // 此处为得到焦点时的处理内容
-                    getActivity().getWindow().setSoftInputMode(
-                            WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-                    //下面是我添加的
-                    Point screenSize = new Point();
-                    getActivity().getWindowManager().getDefaultDisplay().getSize(screenSize);
-
-                    Rect rect = new Rect();
-                    messageInputText.getWindowVisibleDisplayFrame(rect);
-
-//                    int orientation = getActivity().getScreenOrientation();
-                    int keyboardHeight = screenSize.y - rect.bottom;
-                    Log.d("WQ",String.valueOf(keyboardHeight));
-                    Log.d("WQ_screenSize.y",String.valueOf(screenSize.y));
-                    Log.d("WQ_rect.bottom",String.valueOf(rect.bottom));
-                } else {
-                // 此处为失去焦点时的处理内容
-                }
-            }
-        });
+//        messageInputText.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if (hasFocus) {
+//                // 此处为得到焦点时的处理内容
+//                    params.topMargin -= mHeyBoardHeight;
+//                } else {
+//                // 此处为失去焦点时的处理内容
+//                }
+//            }
+//        });
 
         messageInputText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
