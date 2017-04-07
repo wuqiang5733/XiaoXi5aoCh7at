@@ -14,12 +14,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,8 +58,8 @@ public class ChatFragment extends BaseFragment {
     private LinearLayout mTopPanel;
 
     private boolean layoutToggle = false;
-    private int mHeyBoardHeight = 1000;
-    private RelativeLayout.LayoutParams params;
+    private int mHeyBoardHeight = 0;
+    private FrameLayout.LayoutParams params;
 
 
     public static ChatFragment newInstance() {
@@ -98,6 +99,9 @@ public class ChatFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_chat, container, false);
+        ViewParent parentView = view.getParent();
+//        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE|WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
         // 虚拟键盘是否打开，用下面这个方法可以得知虚拟键盘的高度
         view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -111,9 +115,9 @@ public class ChatFragment extends BaseFragment {
                     Log.d("WQ_ObseerverKeyHeight",String.valueOf(mHeyBoardHeight));
                     Log.d("WQ_ObserverRootView",String.valueOf(view.getRootView().getHeight()));
 //                    Log.d("WQ_ViewTreeObserver",String.valueOf(heightDiff));
-//                    params = (RelativeLayout.LayoutParams) mTopPanel.getLayoutParams();
-//                    params.topMargin -= mHeyBoardHeight;
-
+                    params = (FrameLayout.LayoutParams) view.getLayoutParams();
+                    params.topMargin -= 50;
+//                    view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 }
             }
         });
