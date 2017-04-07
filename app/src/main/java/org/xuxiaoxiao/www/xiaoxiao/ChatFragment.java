@@ -1,7 +1,6 @@
 package org.xuxiaoxiao.www.xiaoxiao;
 
 import android.content.Intent;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -60,6 +59,8 @@ public class ChatFragment extends BaseFragment {
     private boolean layoutToggle = false;
     private int mHeyBoardHeight = 0;
     private FrameLayout.LayoutParams params;
+    private Button mAddView;
+    private LinearLayout mHiddenView;
 
 
     public static ChatFragment newInstance() {
@@ -106,19 +107,8 @@ public class ChatFragment extends BaseFragment {
         view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                Rect r = new Rect();
-                //r will be populated with the coordinates of your view that area still visible.
-                view.getWindowVisibleDisplayFrame(r);
-
-                mHeyBoardHeight = view.getRootView().getHeight() - (r.bottom - r.top);
-                if (mHeyBoardHeight > 500) { // if more than 100 pixels, its probably a keyboard...
-                    Log.d("WQ_ObseerverKeyHeight",String.valueOf(mHeyBoardHeight));
-                    Log.d("WQ_ObserverRootView",String.valueOf(view.getRootView().getHeight()));
-//                    Log.d("WQ_ViewTreeObserver",String.valueOf(heightDiff));
-                    params = (FrameLayout.LayoutParams) view.getLayoutParams();
-                    params.topMargin -= 50;
-//                    view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                }
+//                mChatRecyclerView.scrollToPosition((chatMessageAdapter.getItemCount() - 1));
+//                Log.d(TAG, "onGlobalLayout: 444");
             }
         });
         mChatRecyclerView = (RecyclerView) view.findViewById(R.id.chat_recycler_view);
@@ -130,34 +120,16 @@ public class ChatFragment extends BaseFragment {
         chatMessageAdapter = new ChatMessageAdapter(getActivity(), mWilddogRef.limitToLast(10), application);
         mChatRecyclerView.setAdapter(chatMessageAdapter);
 
+        mHiddenView = (LinearLayout)view.findViewById(R.id.hidden);
+        mAddView = (Button) view.findViewById(R.id.add_view);
+        mAddView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mHiddenView.setVisibility(View.VISIBLE);
+                Log.d("WQ",String.valueOf(mHiddenView.getVisibility()));
+            }
+        });
 
-//        // 添加可折叠部分
-//        final ExpandableRelativeLayout expandableLayout
-//                = (ExpandableRelativeLayout) view.findViewById(R.id.expandableLayout);
-//        mPopupBottomSheetDialog.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // toggle expand, collapse
-//
-//                 params = (RelativeLayout.LayoutParams) mTopPanel.getLayoutParams();
-//                if (layoutToggle) {
-//                    params.topMargin += 140;
-//
-//                } else {
-//                    params.topMargin -= 140;
-//
-//                }
-//                layoutToggle = !layoutToggle;
-//                mTopPanel.requestLayout();
-//                expandableLayout.toggle();
-////                view.invalidate();
-////                mSelectBottomSheetContainter = new SelectBottomSheetContainter();
-////                mSelectBottomSheetContainter.show(getFragmentManager(),"12345");
-////                mBottomSheetDialog = new SelectBottomSheetFragment(getActivity());
-////                mBottomSheetDialog.setContentView(R.layout.fragment_bottom_sheet);
-////                mBottomSheetDialog.show();
-//            }
-//        });
 
         chatMessageAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
@@ -187,17 +159,17 @@ public class ChatFragment extends BaseFragment {
         // 输入信息发送
         messageInputText = (EditText) view.findViewById(R.id.messageInput);
 
-//        messageInputText.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View v, boolean hasFocus) {
-//                if (hasFocus) {
-//                // 此处为得到焦点时的处理内容
-//                    params.topMargin -= mHeyBoardHeight;
-//                } else {
-//                // 此处为失去焦点时的处理内容
-//                }
-//            }
-//        });
+        messageInputText.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    // 此处为得到焦点时的处理内容
+                    mChatRecyclerView.scrollToPosition((chatMessageAdapter.getItemCount() - 1));
+                } else {
+                    // 此处为失去焦点时的处理内容
+                }
+            }
+        });
 
         messageInputText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override

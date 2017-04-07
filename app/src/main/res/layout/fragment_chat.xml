@@ -1,7 +1,9 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
 
     tools:context=".ChatActivity">
 
@@ -10,23 +12,34 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="60"
         android:layout_above="@+id/listFooter"
-        android:layout_alignParentTop="true"
+        app:stackFromEnd="true"
         />
 
 
     <LinearLayout
+        android:layout_weight="30"
+
         android:id="@+id/listFooter"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        >
+
+        <Button
+            android:id="@+id/add_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:text="Button"
+            android:layout_weight="1" />
 
         <EditText
             android:id="@+id/messageInput"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="8"
             android:inputType="textShortMessage"
             android:lines="1"
             android:singleLine="true" />
@@ -35,7 +48,80 @@
             android:id="@+id/sendButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_send" />
+            android:layout_gravity="right"
+            android:src="@android:drawable/ic_menu_send"
+            android:layout_weight="1"
+            />
+
     </LinearLayout>
 
-</RelativeLayout>
+    <LinearLayout
+        android:layout_weight="10"
+        android:visibility="gone"
+        android:id="@+id/hidden"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <EditText
+            android:id="@+id/messageInput1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="textShortMessage"
+            android:lines="1"
+            android:singleLine="true"
+            android:text="56895d4"/>
+
+        <EditText
+            android:id="@+id/messageInput2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="textShortMessage"
+            android:lines="1"
+            android:singleLine="true"
+            android:text="56895d4"/>
+
+        <EditText
+            android:id="@+id/messageInput3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="textShortMessage"
+            android:lines="1"
+            android:singleLine="true"
+            android:text="56895d4"/>
+
+        <EditText
+            android:id="@+id/messageInput4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="textShortMessage"
+            android:lines="1"
+            android:singleLine="true"
+            android:text="56895d4"/>
+        <EditText
+            android:id="@+id/messageInput5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="textShortMessage"
+            android:lines="1"
+            android:singleLine="true"
+            android:text="56895d4"/>
+        <EditText
+            android:id="@+id/messageInput6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="textShortMessage"
+            android:lines="1"
+            android:singleLine="true"
+            android:text="56895d4"/>
+
+    </LinearLayout>
+
+</LinearLayout>
