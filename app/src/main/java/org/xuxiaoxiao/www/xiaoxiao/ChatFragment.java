@@ -1,10 +1,13 @@
 package org.xuxiaoxiao.www.xiaoxiao;
 
 import android.content.Intent;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -95,6 +99,21 @@ public class ChatFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_chat, container, false);
+        // 虚拟键盘是否打开，用下面这个方法可以得知虚拟键盘的高度
+        view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Rect r = new Rect();
+                //r will be populated with the coordinates of your view that area still visible.
+                view.getWindowVisibleDisplayFrame(r);
+
+                int heightDiff = view.getRootView().getHeight() - (r.bottom - r.top);
+                if (heightDiff > 500) { // if more than 100 pixels, its probably a keyboard...
+                    Log.d("WQ_ViewTreeObserver",String.valueOf(heightDiff));
+
+                }
+            }
+        });
         mChatRecyclerView = (RecyclerView) view.findViewById(R.id.chat_recycler_view);
         mChatRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mPopupBottomSheetDialog = (Button) view.findViewById(R.id.popupBottomSheetDialog);
@@ -166,6 +185,18 @@ public class ChatFragment extends BaseFragment {
                 // 此处为得到焦点时的处理内容
                     getActivity().getWindow().setSoftInputMode(
                             WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+                    //下面是我添加的
+                    Point screenSize = new Point();
+                    getActivity().getWindowManager().getDefaultDisplay().getSize(screenSize);
+
+                    Rect rect = new Rect();
+                    messageInputText.getWindowVisibleDisplayFrame(rect);
+
+//                    int orientation = getActivity().getScreenOrientation();
+                    int keyboardHeight = screenSize.y - rect.bottom;
+                    Log.d("WQ",String.valueOf(keyboardHeight));
+                    Log.d("WQ_screenSize.y",String.valueOf(screenSize.y));
+                    Log.d("WQ_rect.bottom",String.valueOf(rect.bottom));
                 } else {
                 // 此处为失去焦点时的处理内容
                 }
