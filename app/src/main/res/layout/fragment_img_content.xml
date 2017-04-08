@@ -9,14 +9,21 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="90dp"
         android:cropToPadding="true"
-        app:srcCompat="@drawable/imgdemo" />
+        app:srcCompat="@drawable/imgdemo"
+        android:background="#f000ff00"
+        android:layout_margin="5dp"
+        />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="TextView" />
+        android:text="TextView"
+        android:layout_marginLeft="35dp"
+        android:background="#0000f5"
+        android:textColor="#ffffff"
+        />
 </LinearLayout>
