@@ -32,6 +32,7 @@ import com.wilddog.client.WilddogSync;
 
 import org.xuxiaoxiao.www.xiaoxiao.chatConfig.ChatConfigActivity;
 import org.xuxiaoxiao.www.xiaoxiao.infrastructure.BaseFragment;
+import org.xuxiaoxiao.www.xiaoxiao.infrastructure.emotion.EmotionSeries;
 
 /**
  * Created by WuQiang on 2017/3/30.
@@ -52,17 +53,12 @@ public class ChatFragment extends BaseFragment {
     private ValueEventListener mConnectedListener;
     private ChatMessageAdapter chatMessageAdapter;
     private EditText messageInputText;
-    private Button mPopupBottomSheetDialog;
-    //    private SelectBottomSheetFragment mBottomSheetDialog;
-//    private SelectBottomSheetContainter mSelectBottomSheetContainter;
-    private LinearLayout mTopPanel;
 
     private boolean layoutToggle = false;
     private int mHeyBoardHeight = 0;
     private FrameLayout.LayoutParams params;
     private Button mAddView;
     private LinearLayout mHiddenView;
-    private int mVisiblity;
 
 
     public static ChatFragment newInstance() {
@@ -71,8 +67,17 @@ public class ChatFragment extends BaseFragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        EmotionSeries testtest;
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+/*
+        String temp = emotionLab.getEmotionSeries().get(1).getEmotions().get(0).getDescription();
+        int itemp = emotionLab.getEmotionSeries().get(0).getMotionNum();
+
+        Log.d("WQ",temp);
+        Log.d("WQ",String.valueOf(itemp));
+
+       */
 
         // Setup our Wilddog mWilddogRef
         mWilddogRef = WilddogSync.getInstance().getReference().child("chat");
@@ -116,14 +121,13 @@ public class ChatFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 // 表情部分
-                Log.d("WQ","ShowHiddenViewButtonClick");
+                Log.d("WQ", "ShowHiddenViewButtonClick");
                 hideKeyboard(view);
                 mHiddenView.setVisibility((mHiddenView.getVisibility() == View.VISIBLE) ? View.GONE : View.VISIBLE);
                 messageInputText.clearFocus();
                 ViewPager pager = (ViewPager) view.findViewById(R.id.pager);
                 // 启动表情部分的 PageView
-                pager.setAdapter(new PageViewAdapter(getActivity(), getChildFragmentManager()));
-//                Log.d("WQ",String.valueOf(mVisiblity));
+                pager.setAdapter(new PageViewAdapter(getActivity(), getChildFragmentManager(),emotionLab));
             }
         });
 
