@@ -27,7 +27,7 @@ public class PageViewAdapter extends FragmentPagerAdapter {
 
     @Override
     public android.support.v4.app.Fragment getItem(int position) {
-        return (PageViewFragment.newInstance(position,emotionSeries));
+        return (PageViewFragment.newInstance(position,emotionLab));
     }
 
     @Override
@@ -39,6 +39,7 @@ public class PageViewAdapter extends FragmentPagerAdapter {
     public String getPageTitle(int position) {
         // 传送表情包的名称
 //        return (PageViewFragment.getTitle(context, position));
+//        Log.d("WQ",emotionLab.getEmotionSeries().get(position).getEmotions().get(position).getDescription());
         return emotionSeries.get(position).getSeriesName();
     }
 

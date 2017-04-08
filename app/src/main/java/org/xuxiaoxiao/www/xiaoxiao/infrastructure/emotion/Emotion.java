@@ -1,10 +1,13 @@
 package org.xuxiaoxiao.www.xiaoxiao.infrastructure.emotion;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by WuQiang on 2017/4/8.
  */
 
-public class Emotion {
+public class Emotion implements Parcelable {
 
     //    public static int mPageSum;     // 一共需要几个页面
 //    private int mPageIndex;         // 在第几个页面上
@@ -25,4 +28,30 @@ public class Emotion {
     public void setDescription(String mDescription) {
         this.mDescription = mDescription;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.mDescription);
+    }
+
+    protected Emotion(Parcel in) {
+        this.mDescription = in.readString();
+    }
+
+    public static final Parcelable.Creator<Emotion> CREATOR = new Parcelable.Creator<Emotion>() {
+        @Override
+        public Emotion createFromParcel(Parcel source) {
+            return new Emotion(source);
+        }
+
+        @Override
+        public Emotion[] newArray(int size) {
+            return new Emotion[size];
+        }
+    };
 }

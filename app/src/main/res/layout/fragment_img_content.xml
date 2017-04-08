@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:text="TextView"
-        android:layout_marginLeft="35dp"
+        android:layout_marginLeft="25dp"
         android:background="#0000f5"
         android:textColor="#ffffff"
         />

@@ -121,13 +121,15 @@ public class ChatFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 // 表情部分
-                Log.d("WQ", "ShowHiddenViewButtonClick");
+//                Log.d("WQ", "ShowHiddenViewButtonClick");
                 hideKeyboard(view);
                 mHiddenView.setVisibility((mHiddenView.getVisibility() == View.VISIBLE) ? View.GONE : View.VISIBLE);
                 messageInputText.clearFocus();
                 ViewPager pager = (ViewPager) view.findViewById(R.id.pager);
                 // 启动表情部分的 PageView
                 pager.setAdapter(new PageViewAdapter(getActivity(), getChildFragmentManager(),emotionLab));
+                Log.d("WQ",emotionLab.getEmotionSeries().get(3).getEmotions().get(6).getDescription());
+                Log.d("WQ",emotionLab.getEmotionSeries().get(3).getSeriesName());
             }
         });
 
