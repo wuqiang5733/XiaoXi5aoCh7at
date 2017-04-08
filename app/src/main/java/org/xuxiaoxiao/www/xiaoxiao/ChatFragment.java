@@ -15,7 +15,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -104,22 +103,9 @@ public class ChatFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_chat, container, false);
-        ViewParent parentView = view.getParent();
-//        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE|WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
-        // 虚拟键盘是否打开，用下面这个方法可以得知虚拟键盘的高度
-//        view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-//            @Override
-//            public void onGlobalLayout() {
-////                mChatRecyclerView.scrollToPosition((chatMessageAdapter.getItemCount() - 1));
-////                Log.d(TAG, "onGlobalLayout: 444");
-//            }
-//        });
         mChatRecyclerView = (RecyclerView) view.findViewById(R.id.chat_recycler_view);
         mChatRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-//        mPopupBottomSheetDialog = (Button) view.findViewById(R.id.popupBottomSheetDialog);
-//        mTopPanel = (LinearLayout) view.findViewById(R.id.messageTopPanel);
-//        params = (RelativeLayout.LayoutParams) mTopPanel.getLayoutParams();
 
         chatMessageAdapter = new ChatMessageAdapter(getActivity(), mWilddogRef.limitToLast(10), application);
         mChatRecyclerView.setAdapter(chatMessageAdapter);
@@ -130,7 +116,6 @@ public class ChatFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 // 表情部分
-//                mVisiblity = mHiddenView.getVisibility();
                 Log.d("WQ","ShowHiddenViewButtonClick");
                 hideKeyboard(view);
                 mHiddenView.setVisibility((mHiddenView.getVisibility() == View.VISIBLE) ? View.GONE : View.VISIBLE);

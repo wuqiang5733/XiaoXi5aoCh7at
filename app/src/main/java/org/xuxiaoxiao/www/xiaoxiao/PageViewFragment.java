@@ -21,6 +21,7 @@ public class PageViewFragment extends android.support.v4.app.Fragment {
     private RecyclerView mImgRecyclerView;
 
     static PageViewFragment newInstance(int position) {
+        // 这个 position 是整个页面的 position
         PageViewFragment frag = new PageViewFragment();
         Bundle args = new Bundle();
 
@@ -40,25 +41,24 @@ public class PageViewFragment extends android.support.v4.app.Fragment {
                              ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.editor, container, false);
-//        EditText editor = (EditText) view.findViewById(R.id.editor);
         int position = getArguments().getInt(KEY_POSITION, -1);
-
-//        editor.setHint(getTitle(getActivity(), position));
 
         mImgRecyclerView = (RecyclerView) view.findViewById(R.id.img_recycler_view);
 //        mImgRecyclerView.setLayoutManager(new LinearLayoutManager(getParentFragment().getActivity()));
         mImgRecyclerView.setLayoutManager(new GridLayoutManager(getParentFragment().getActivity(), 4));
-        mImgRecyclerView.setAdapter(new ImgAdapter());
-        Log.d("WQ", "PageViewFragment_onCreateView");
+        // 设置这个 ImgAdapter 需要两个参数，一个是整个页面，
+        mImgRecyclerView.setAdapter(new ImgAdapter(position));
+//        Log.d("WQ", "PageViewFragment_onCreateView");
         return (view);
     }
 
-    private class ImgAdapter extends RecyclerView.Adapter<ImgViewHolder> {
+    private class ImgAdapter extends RecyclerView.Adapter<ImgViewHolder>{
         private int[] temp = new int[12];
+        private int mPagePosition;
 
-
-        public ImgAdapter() {
-            Log.d("WQ", "ImgAdapter");
+        public ImgAdapter(int pagePosition) {
+//            Log.d("WQ", "ImgAdapter");
+            this.mPagePosition = pagePosition;
             for(int i = 0; i < 12 ; i ++){
                 temp[i] = i;
             }
@@ -73,7 +73,7 @@ public class PageViewFragment extends android.support.v4.app.Fragment {
 
         @Override
         public void onBindViewHolder(ImgViewHolder holder, int position) {
-            holder.mTextView.setText(String.valueOf(temp[position]));
+            holder.mTextView.setText(String.valueOf(mPagePosition) + "-" +String.valueOf(temp[position]));
         }
 
         @Override
