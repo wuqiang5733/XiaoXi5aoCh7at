@@ -20,17 +20,17 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 //import android.support.v13.app.FragmentPagerAdapter;
 
-public class SampleAdapter extends FragmentPagerAdapter {
+public class PageViewAdapter extends FragmentPagerAdapter {
   Context context;
 
-  public SampleAdapter(Context context, FragmentManager fm) {
+  public PageViewAdapter(Context context, FragmentManager fm) {
     super(fm);
     this.context = context;
   }
 
   @Override
   public android.support.v4.app.Fragment getItem(int position) {
-    return (EditorFragment.newInstance(position));
+    return (PageViewFragment.newInstance(position));
   }
 
   @Override
@@ -40,6 +40,6 @@ public class SampleAdapter extends FragmentPagerAdapter {
 
   @Override
   public String getPageTitle(int position) {
-    return(EditorFragment.getTitle(context, position));
+    return(PageViewFragment.getTitle(context, position));
   }
 }

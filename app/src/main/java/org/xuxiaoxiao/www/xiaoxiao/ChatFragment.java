@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
-import android.view.ViewTreeObserver;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -55,7 +55,7 @@ public class ChatFragment extends BaseFragment {
     private EditText messageInputText;
     private Button mPopupBottomSheetDialog;
     //    private SelectBottomSheetFragment mBottomSheetDialog;
-    private SelectBottomSheetContainter mSelectBottomSheetContainter;
+//    private SelectBottomSheetContainter mSelectBottomSheetContainter;
     private LinearLayout mTopPanel;
 
     private boolean layoutToggle = false;
@@ -89,6 +89,7 @@ public class ChatFragment extends BaseFragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            // 转到配置页面
             case R.id.chat_config:
 //                Toast.makeText(getActivity(),"dddd",Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getActivity(), ChatConfigActivity.class);
@@ -107,13 +108,13 @@ public class ChatFragment extends BaseFragment {
 //        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE|WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         // 虚拟键盘是否打开，用下面这个方法可以得知虚拟键盘的高度
-        view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-//                mChatRecyclerView.scrollToPosition((chatMessageAdapter.getItemCount() - 1));
-//                Log.d(TAG, "onGlobalLayout: 444");
-            }
-        });
+//        view.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+////                mChatRecyclerView.scrollToPosition((chatMessageAdapter.getItemCount() - 1));
+////                Log.d(TAG, "onGlobalLayout: 444");
+//            }
+//        });
         mChatRecyclerView = (RecyclerView) view.findViewById(R.id.chat_recycler_view);
         mChatRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 //        mPopupBottomSheetDialog = (Button) view.findViewById(R.id.popupBottomSheetDialog);
@@ -128,12 +129,15 @@ public class ChatFragment extends BaseFragment {
         mAddView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // 表情部分
 //                mVisiblity = mHiddenView.getVisibility();
+                Log.d("WQ","ShowHiddenViewButtonClick");
                 hideKeyboard(view);
                 mHiddenView.setVisibility((mHiddenView.getVisibility() == View.VISIBLE) ? View.GONE : View.VISIBLE);
                 messageInputText.clearFocus();
                 ViewPager pager = (ViewPager) view.findViewById(R.id.pager);
-                pager.setAdapter(new SampleAdapter(getActivity(), getChildFragmentManager()));
+                // 启动表情部分的 PageView
+                pager.setAdapter(new PageViewAdapter(getActivity(), getChildFragmentManager()));
 //                Log.d("WQ",String.valueOf(mVisiblity));
             }
         });
@@ -168,6 +172,7 @@ public class ChatFragment extends BaseFragment {
         messageInputText = (EditText) view.findViewById(R.id.messageInput);
 
         messageInputText.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
+            // 输入信息文本获得焦点时
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
