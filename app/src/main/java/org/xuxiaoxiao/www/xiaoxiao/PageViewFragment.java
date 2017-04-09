@@ -29,6 +29,7 @@ public class PageViewFragment extends BaseFragment {
     private RecyclerView mImgRecyclerView;
 
 
+
     static PageViewFragment newInstance(int position, EmotionLab emotionLab) {
 
         PageViewFragment frag = new PageViewFragment();
@@ -106,7 +107,7 @@ public class PageViewFragment extends BaseFragment {
         @Override
         public void onClick(View v) {
             String emotionName = emotion.getDescription();
-            Toast.makeText(getParentFragment().getActivity(), emotionName, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), emotionName, Toast.LENGTH_SHORT).show();
 //            EventBus.getDefault().post(new SendEmotionEvent(emotionName));
         }
 
