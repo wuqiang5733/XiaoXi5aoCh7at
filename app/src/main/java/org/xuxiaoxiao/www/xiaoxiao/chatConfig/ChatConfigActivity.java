@@ -8,6 +8,9 @@ import org.xuxiaoxiao.www.xiaoxiao.SingleFragmentActivity;
  * Created by WuQiang on 2017/3/31.
  */
 
+
+
+
 public class ChatConfigActivity extends SingleFragmentActivity {
     @Override
     protected Fragment createFragment() {

@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -30,9 +29,12 @@ import com.wilddog.client.SyncReference;
 import com.wilddog.client.ValueEventListener;
 import com.wilddog.client.WilddogSync;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.xuxiaoxiao.www.xiaoxiao.chatConfig.ChatConfigActivity;
 import org.xuxiaoxiao.www.xiaoxiao.infrastructure.BaseFragment;
 import org.xuxiaoxiao.www.xiaoxiao.infrastructure.emotion.EmotionSeries;
+import org.xuxiaoxiao.www.xiaoxiao.infrastructure.emotion.SendEmotionEvent;
 
 /**
  * Created by WuQiang on 2017/3/30.
@@ -64,20 +66,15 @@ public class ChatFragment extends BaseFragment {
     public static ChatFragment newInstance() {
         return new ChatFragment();
     }
-
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         EmotionSeries testtest;
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-/*
-        String temp = emotionLab.getEmotionSeries().get(1).getEmotions().get(0).getDescription();
-        int itemp = emotionLab.getEmotionSeries().get(0).getMotionNum();
-
-        Log.d("WQ",temp);
-        Log.d("WQ",String.valueOf(itemp));
-
-       */
 
         // Setup our Wilddog mWilddogRef
         mWilddogRef = WilddogSync.getInstance().getReference().child("chat");
@@ -121,15 +118,13 @@ public class ChatFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 // 表情部分
-//                Log.d("WQ", "ShowHiddenViewButtonClick");
+
                 hideKeyboard(view);
-                mHiddenView.setVisibility((mHiddenView.getVisibility() == View.VISIBLE) ? View.GONE : View.VISIBLE);
                 messageInputText.clearFocus();
+                mHiddenView.setVisibility((mHiddenView.getVisibility() == View.VISIBLE) ? View.GONE : View.VISIBLE);
                 ViewPager pager = (ViewPager) view.findViewById(R.id.pager);
                 // 启动表情部分的 PageView
                 pager.setAdapter(new PageViewAdapter(getActivity(), getChildFragmentManager(),emotionLab));
-                Log.d("WQ",emotionLab.getEmotionSeries().get(3).getEmotions().get(6).getDescription());
-                Log.d("WQ",emotionLab.getEmotionSeries().get(3).getSeriesName());
             }
         });
 
@@ -210,7 +205,11 @@ public class ChatFragment extends BaseFragment {
         }
     }
 
-
+    // This method will be called when a MessageEvent is posted (in the UI thread for Toast)
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void onMessageEvent(SendEmotionEvent event) {
+//        Toast.makeText(getActivity(), event.getEmotionName(), Toast.LENGTH_SHORT).show();
+//    }
     @Override
     public void onStop() {
         super.onStop();

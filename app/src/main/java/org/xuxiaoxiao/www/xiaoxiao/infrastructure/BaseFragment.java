@@ -16,6 +16,7 @@ public class BaseFragment extends Fragment {
 //    protected SparseArray<Object> sparseArray;
     protected SoundPool soundPool;
     protected EmotionLab emotionLab;
+//    protected EventBus eventBus;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -26,5 +27,18 @@ public class BaseFragment extends Fragment {
         soundPool = application.getSoundPool();
         user = application.getUser();
         emotionLab = application.getEmotionLab();
+//        eventBus = application.getEventBus();
     }
+    @Override
+    public void onStart() {
+        super.onStart();
+//        eventBus.register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+//        eventBus.unregister(this);
+    }
+
 }

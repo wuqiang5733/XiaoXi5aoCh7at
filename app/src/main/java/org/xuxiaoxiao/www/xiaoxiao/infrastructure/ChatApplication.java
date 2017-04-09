@@ -20,6 +20,7 @@ public class ChatApplication extends android.app.Application {
     public static boolean isAlarmOn = true;
     private SoundPool soundPool;
     private EmotionLab emotionLab;
+//    private EventBus eventBus;
 
 
     @Override
@@ -34,13 +35,14 @@ public class ChatApplication extends android.app.Application {
         // 注意这儿的顺序是相当重要的！！必须先得把 SoundPool 跟 User 初始化了，才给附给 sparseArray
         soundPool = new SoundPool(this);
         emotionLab = EmotionLab.getEmotionLab(this);
+//        eventBus = EventBus.getDefault();
     }
+
 
 
     public User getUser() {
         return user;
     }
-
 
     public SoundPool getSoundPool() {
         return soundPool;
@@ -49,6 +51,10 @@ public class ChatApplication extends android.app.Application {
     public EmotionLab getEmotionLab(){
         return emotionLab;
     }
+
+//    public EventBus getEventBus(){
+//        return eventBus;
+//    }
 
 
 }

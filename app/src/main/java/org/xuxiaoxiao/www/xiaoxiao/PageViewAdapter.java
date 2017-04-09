@@ -17,12 +17,14 @@ public class PageViewAdapter extends FragmentPagerAdapter {
     Context context;
     private EmotionLab emotionLab;
     private ArrayList<EmotionSeries> emotionSeries;
+//    private EventBus eventBus;
 
 
     public PageViewAdapter(Context context, FragmentManager fm,EmotionLab emotionLab) {
         super(fm);
         this.emotionLab = emotionLab;
         this.emotionSeries = emotionLab.getEmotionSeries();
+//        this.eventBus = eventBus;
     }
 
     @Override

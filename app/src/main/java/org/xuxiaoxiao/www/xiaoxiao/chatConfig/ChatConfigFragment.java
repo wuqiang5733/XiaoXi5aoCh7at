@@ -9,8 +9,10 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ToggleButton;
 
+import org.greenrobot.eventbus.EventBus;
 import org.xuxiaoxiao.www.xiaoxiao.R;
 import org.xuxiaoxiao.www.xiaoxiao.infrastructure.BaseFragment;
+import org.xuxiaoxiao.www.xiaoxiao.infrastructure.emotion.SendEmotionEvent;
 
 /**
  * Created by WuQiang on 2017/3/31.
@@ -57,4 +59,6 @@ public class ChatConfigFragment extends BaseFragment implements CompoundButton.O
             application.isAlarmOn = isChecked;
         }
     }
+
+
 }
