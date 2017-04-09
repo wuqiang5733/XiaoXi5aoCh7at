@@ -29,12 +29,9 @@ import com.wilddog.client.SyncReference;
 import com.wilddog.client.ValueEventListener;
 import com.wilddog.client.WilddogSync;
 
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 import org.xuxiaoxiao.www.xiaoxiao.chatConfig.ChatConfigActivity;
 import org.xuxiaoxiao.www.xiaoxiao.infrastructure.BaseFragment;
 import org.xuxiaoxiao.www.xiaoxiao.infrastructure.emotion.EmotionSeries;
-import org.xuxiaoxiao.www.xiaoxiao.infrastructure.emotion.SendEmotionEvent;
 
 /**
  * Created by WuQiang on 2017/3/30.
@@ -127,7 +124,6 @@ public class ChatFragment extends BaseFragment {
                 pager.setAdapter(new PageViewAdapter(getActivity(), getChildFragmentManager(),emotionLab));
             }
         });
-
 
         chatMessageAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override

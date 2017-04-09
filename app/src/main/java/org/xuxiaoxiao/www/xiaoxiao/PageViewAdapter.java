@@ -29,7 +29,7 @@ public class PageViewAdapter extends FragmentPagerAdapter {
 
     @Override
     public android.support.v4.app.Fragment getItem(int position) {
-        return (PageViewFragment.newInstance(position,emotionLab));
+        return (PageViewFragment.newInstance(position));
     }
 
     @Override

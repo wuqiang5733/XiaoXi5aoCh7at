@@ -29,14 +29,13 @@ public class PageViewFragment extends BaseFragment {
     private RecyclerView mImgRecyclerView;
 
 
-
-    static PageViewFragment newInstance(int position, EmotionLab emotionLab) {
+    static PageViewFragment newInstance(int position) {
 
         PageViewFragment frag = new PageViewFragment();
         Bundle args = new Bundle();
 
         args.putInt(KEY_POSITION, position);
-        args.putParcelable(KEY_EMOTIONSERIES, emotionLab);
+//        args.putParcelable(KEY_EMOTIONSERIES, emotionLab);
         frag.setArguments(args);
         return (frag);
     }
@@ -54,12 +53,12 @@ public class PageViewFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.editor, container, false);
         int position = getArguments().getInt(KEY_POSITION, -1);
-        EmotionLab emotionLab = getArguments().getParcelable(KEY_EMOTIONSERIES);
-
+//        EmotionLab emotionLab = getArguments().getParcelable(KEY_EMOTIONSERIES);
 
         mImgRecyclerView = (RecyclerView) view.findViewById(R.id.img_recycler_view);
         mImgRecyclerView.setLayoutManager(new GridLayoutManager(getParentFragment().getActivity(), 4));
         // 设置这个 ImgAdapter 需要两个参数，一个是整个页面，
+        // 注意下面那个 emotionLab 是直接从 BaseFragment 当中引用的
         mImgRecyclerView.setAdapter(new ImgAdapter(position, emotionLab));
 
         return (view);
@@ -71,7 +70,7 @@ public class PageViewFragment extends BaseFragment {
 
         public ImgAdapter(int pagePosition, EmotionLab emotionLab) {
             // 为了加快绑定事件的速度，先准备好表情数组
-            this.emotions = emotionLab.getEmotionSeries().get(pagePosition).getEmotions();
+            emotions = emotionLab.getEmotionSeries().get(pagePosition).getEmotions();
 
         }
 
@@ -112,14 +111,12 @@ public class PageViewFragment extends BaseFragment {
         }
 
 
-
         public void bind(Emotion emotion) {
             this.emotion = emotion;
             mTextView.setText(emotion.getDescription());
             mImageView.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.imgdemo, null));
         }
     }
-
 
 
 //
@@ -134,7 +131,6 @@ public class PageViewFragment extends BaseFragment {
 //        super.onStop();
 //        EventBus.getDefault().unregister(this);
 //    }
-
 
 
 }
